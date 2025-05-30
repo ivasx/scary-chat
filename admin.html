@@ -4,331 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Адмін панель - Страшний чат</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-      color: #ffffff;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 350px 1fr;
-      grid-template-rows: auto 1fr;
-      gap: 20px;
-      height: calc(100vh - 40px);
-    }
-
-    .header {
-      grid-column: 1 / -1;
-      background: rgba(30, 30, 30, 0.9);
-      padding: 20px;
-      border-radius: 12px;
-      backdrop-filter: blur(10px);
-      border: 1px solid #333;
-    }
-
-    .header h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .sidebar {
-      background: rgba(30, 30, 30, 0.9);
-      border-radius: 12px;
-      padding: 20px;
-      backdrop-filter: blur(10px);
-      border: 1px solid #333;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .main-area {
-      background: rgba(30, 30, 30, 0.9);
-      border-radius: 12px;
-      padding: 20px;
-      backdrop-filter: blur(10px);
-      border: 1px solid #333;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .section {
-      background: rgba(40, 40, 40, 0.8);
-      border-radius: 8px;
-      padding: 15px;
-      border: 1px solid #444;
-    }
-
-    .section h3 {
-      font-size: 16px;
-      margin-bottom: 15px;
-      color: #00d4aa;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .characters-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .character-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      background: rgba(60, 60, 60, 0.5);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 2px solid transparent;
-    }
-
-    .character-item:hover {
-      background: rgba(80, 80, 80, 0.7);
-    }
-
-    .character-item.active {
-      border-color: #007aff;
-      background: rgba(0, 122, 255, 0.2);
-    }
-
-    .character-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .character-info {
-      flex: 1;
-    }
-
-    .character-name {
-      font-weight: 500;
-      font-size: 14px;
-    }
-
-    .character-type {
-      font-size: 12px;
-      color: #8e8e93;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 14px;
-      font-weight: 500;
-      color: #e0e0e0;
-    }
-
-    .input, .select, .textarea {
-      width: 100%;
-      padding: 10px;
-      background: rgba(60, 60, 60, 0.8);
-      border: 1px solid #555;
-      border-radius: 6px;
-      color: white;
-      font-size: 14px;
-      font-family: inherit;
-    }
-
-    .input:focus, .select:focus, .textarea:focus {
-      outline: none;
-      border-color: #007aff;
-      box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
-    }
-
-    .textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .color-input {
-      width: 50px;
-      height: 40px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .btn {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-primary {
-      background: #007aff;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #0056cc;
-    }
-
-    .btn-success {
-      background: #28a745;
-      color: white;
-    }
-
-    .btn-success:hover {
-      background: #1e7e34;
-    }
-
-    .btn-danger {
-      background: #dc3545;
-      color: white;
-    }
-
-    .btn-danger:hover {
-      background: #c82333;
-    }
-
-    .btn-secondary {
-      background: #6c757d;
-      color: white;
-    }
-
-    .btn-secondary:hover {
-      background: #545b62;
-    }
-
-    .messages-container {
-      flex: 1;
-      background: rgba(20, 20, 20, 0.8);
-      border-radius: 8px;
-      padding: 15px;
-      overflow-y: auto;
-      margin-bottom: 15px;
-      max-height: 300px;
-    }
-
-    .admin-message {
-      margin-bottom: 10px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    .admin-message.user {
-      background: rgba(0, 122, 255, 0.2);
-      text-align: right;
-    }
-
-    .admin-message.other {
-      background: rgba(255, 107, 107, 0.2);
-    }
-
-    .message-controls {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .quick-responses {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 15px;
-    }
-
-    .quick-response {
-      padding: 6px 12px;
-      background: rgba(80, 80, 80, 0.8);
-      border: 1px solid #666;
-      border-radius: 16px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .quick-response:hover {
-      background: rgba(100, 100, 100, 0.8);
-    }
-
-    .settings-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
-
-    .background-preview {
-      width: 100%;
-      height: 60px;
-      border-radius: 6px;
-      margin-top: 8px;
-      border: 1px solid #666;
-    }
-
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.2);
-      border-radius: 3px;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr;
-      }
-      
-      .sidebar {
-        order: 2;
-      }
-      
-      .main-area {
-        order: 3;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/admin.css">
 </head>
 <body>
   <div class="container">
     <div class="header">
       <h1>👻 Адмін панель страшного чату</h1>
-      <p>Керуйте персонажами та налаштуваннями чату</p>
+      <p>Повне керування персонажами, повідомленнями та налаштуваннями чату</p>
     </div>
 
     <div class="sidebar">
@@ -347,8 +29,15 @@
           <input type="text" class="input" id="charName" placeholder="Ім'я персонажа">
         </div>
         <div class="form-group">
-          <label>Аватар (емодзі)</label>
-          <input type="text" class="input" id="charAvatar" placeholder="👻" maxlength="2">
+          <label>Аватар</label>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" class="input" id="charAvatar" placeholder="👻 або URL фото" style="flex: 1;">
+            <label for="avatarFile" class="file-upload-btn">
+              📷 Фото
+            </label>
+          </div>
+          <input type="file" id="avatarFile" class="file-input" accept="image/*" onchange="handleAvatarUpload(event)">
+          <div class="avatar-preview" id="avatarPreview">👻</div>
         </div>
         <div class="form-group">
           <label>Колір</label>
@@ -369,27 +58,6 @@
           <button class="btn btn-danger" onclick="deleteCharacter()">🗑️ Видалити</button>
         </div>
       </div>
-
-      <!-- Налаштування чату -->
-      <div class="section">
-        <h3>🎨 Налаштування чату</h3>
-        <div class="form-group">
-          <label>Назва чату</label>
-          <input type="text" class="input" id="chatTitle" placeholder="Мертві душі">
-        </div>
-        <div class="form-group">
-          <label>Фон</label>
-          <select class="select" id="backgroundSelect" onchange="updateBackground()">
-            <option value="gradient1">Темний градієнт</option>
-            <option value="gradient2">Червоно-чорний</option>
-            <option value="gradient3">Фіолетово-чорний</option>
-            <option value="gradient4">Зелено-чорний</option>
-            <option value="gradient5">Синьо-чорний</option>
-          </select>
-          <div class="background-preview" id="backgroundPreview"></div>
-        </div>
-        <button class="btn btn-primary" onclick="saveSettings()">💾 Зберегти налаштування</button>
-      </div>
     </div>
 
     <div class="main-area">
@@ -406,335 +74,156 @@
 
       <div class="messages-container" id="messagesContainer"></div>
 
-      <div class="message-controls">
-        <textarea 
-          class="textarea" 
-          id="adminMessage" 
-          placeholder="Напишіть відповідь від імені обраного персонажа..."
-          style="flex: 1; margin-right: 10px;"
-        ></textarea>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="message-input-container">
+        <div style="flex: 1;">
+          <!-- Медіа завантаження -->
+          <div class="media-upload">
+            <label for="photoFile" class="file-upload-btn">
+              📷 Фото
+            </label>
+            <label for="videoFile" class="file-upload-btn">
+              🎬 Відео
+            </label>
+            <div id="mediaPreview"></div>
+          </div>
+          
+          <textarea 
+            class="textarea message-textarea" 
+            id="adminMessage" 
+            placeholder="Напишіть відповідь від імені обраного персонажа..."
+          ></textarea>
+          
+          <!-- Відповідь на повідомлення -->
+          <div id="replyPreview" style="display: none; background: rgba(60, 60, 60, 0.8); padding: 8px; border-radius: 6px; margin-top: 8px; border-left: 3px solid #007aff;">
+            <div style="font-size: 12px; color: #007aff; margin-bottom: 4px;" id="replyToUser"></div>
+            <div style="font-size: 13px; color: #ccc;" id="replyToText"></div>
+            <button onclick="cancelReply()" style="position: absolute; right: 8px; top: 8px; background: none; border: none; color: #999; cursor: pointer;">×</button>
+          </div>
+        </div>
+        
+        <div class="message-actions">
           <button class="btn btn-success" onclick="sendMessage()">📤 Надіслати</button>
           <button class="btn btn-secondary" onclick="simulateTyping()">⌨️ Друкує...</button>
           <button class="btn btn-danger" onclick="clearChat()">🗑️ Очистити</button>
         </div>
       </div>
+      
+      <input type="file" id="photoFile" class="file-input" accept="image/*" onchange="handleMediaUpload(event, 'photo')">
+      <input type="file" id="videoFile" class="file-input" accept="video/*" onchange="handleMediaUpload(event, 'video')">
+    </div>
+
+    <div class="right-panel">
+      <!-- Налаштування чату -->
+      <div class="section">
+        <h3>🎨 Налаштування чату</h3>
+        <div class="form-group">
+          <label>Назва чату</label>
+          <input type="text" class="input" id="chatTitle" placeholder="Мертві душі">
+        </div>
+        <div class="form-group">
+          <label>Фон чату</label>
+          <select class="select" id="backgroundSelect" onchange="updateBackground()">
+            <option value="gradient1">Темний градієнт</option>
+            <option value="gradient2">Червоно-чорний</option>
+            <option value="gradient3">Фіолетово-чорний</option>
+            <option value="gradient4">Зелено-чорний</option>
+            <option value="gradient5">Синьо-чорний</option>
+            <option value="custom">Власне фото</option>
+          </select>
+          <div style="margin-top: 8px;">
+            <label for="backgroundFile" class="file-upload-btn" id="backgroundUploadBtn" style="display: none;">
+              🖼️ Завантажити фон
+            </label>
+            <input type="file" id="backgroundFile" class="file-input" accept="image/*" onchange="handleBackgroundUpload(event)">
+          </div>
+          <div class="background-preview" id="backgroundPreview"></div>
+        </div>
+        
+        <!-- Кольорова схема -->
+        <div class="form-group">
+          <label>Кольорова схема</label>
+          <select class="select" id="colorScheme" onchange="updateColorScheme()">
+            <option value="default">За замовчуванням</option>
+            <option value="dark">Темна</option>
+            <option value="blue">Синя</option>
+            <option value="green">Зелена</option>
+            <option value="red">Червона</option>
+            <option value="purple">Фіолетова</option>
+            <option value="custom">Власна</option>
+          </select>
+          <div id="customColors" style="display: none; margin-top: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label style="font-size: 12px;">Фон</label>
+                <input type="color" class="color-input" id="customBgColor" value="#0f1419">
+              </div>
+              <div>
+                <label style="font-size: 12px;">Акцент</label>
+                <input type="color" class="color-input" id="customAccentColor" value="#2b5278">
+              </div>
+            </div>
+          </div>
+          <div class="color-scheme-preview" id="colorPreview"></div>
+        </div>
+        
+        <button class="btn btn-primary" onclick="saveSettings()">💾 Зберегти налаштування</button>
+      </div>
+
+      <!-- Керування користувачами -->
+      <div class="section">
+        <h3>👥 Користувачі</h3>
+        <div id="usersList">
+          <div class="user-item">
+            <div>
+              <div style="font-weight: 500;">Користувач #1</div>
+              <div class="user-status">
+                <div class="status-indicator online"></div>
+                <span>Онлайн</span>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-warning btn-sm" onclick="toggleMute('user1')">🔇 Заглушити</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Статистика -->
+      <div class="section">
+        <h3>📊 Статистика</h3>
+        <div style="font-size: 14px; line-height: 1.6;">
+          <div>Повідомлень: <span id="messagesCount">0</span></div>
+          <div>Персонажів: <span id="charactersCount">0</span></div>
+          <div>Користувачів онлайн: <span id="onlineCount">0</span></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getDatabase, ref, onValue, push, remove, set, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  <!-- Модальне вікно редагування повідомлення -->
+  <div class="edit-message-overlay" id="editMessageOverlay">
+    <div class="edit-message-modal">
+      <div class="modal-header">
+        <h3>✏️ Редагувати повідомлення</h3>
+        <button class="modal-close" onclick="closeEditModal()">×</button>
+      </div>
+      <div class="form-group">
+        <label>Текст повідомлення</label>
+        <textarea class="textarea" id="editMessageText" rows="4"></textarea>
+      </div>
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button class="btn btn-secondary" onclick="closeEditModal()">Скасувати</button>
+        <button class="btn btn-success" onclick="saveEditedMessage()">💾 Зберегти</button>
+      </div>
+    </div>
+  </div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBEEfn7xzGqKa1Cq9KOeeDXv836wMreFrA",
-      authDomain: "scary-72f98.firebaseapp.com",
-      databaseURL: "https://scary-72f98-default-rtdb.firebaseio.com",
-      projectId: "scary-72f98",
-      storageBucket: "scary-72f98.appspot.com",
-      messagingSenderId: "450754639280",
-      appId: "1:450754639280:web:5550f2cfeb4aac1f0e1275",
-      measurementId: "G-6FKRD4WWHG"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    
-    const messagesRef = ref(db, "messages");
-    const charactersRef = ref(db, "characters");
-    const settingsRef = ref(db, "settings");
-    const typingRef = ref(db, "typing");
-
-    let characters = {};
-    let selectedCharacter = null;
-    let settings = {};
-
-    const backgrounds = {
-      gradient1: 'linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%)',
-      gradient2: 'linear-gradient(135deg, #2c1810 0%, #1a0000 100%)',
-      gradient3: 'linear-gradient(135deg, #1a0033 0%, #0d0d2b 100%)',
-      gradient4: 'linear-gradient(135deg, #0d2818 0%, #000000 100%)',
-      gradient5: 'linear-gradient(135deg, #001a33 0%, #000011 100%)'
-    };
-
-    // Ініціалізація персонажів за замовчуванням
-    function initDefaultCharacters() {
-      const defaultChars = {
-        ghost1: {
-          name: "Привид Марія",
-          avatar: "👻",
-          color: "#ff6b6b",
-          type: "ghost"
-        },
-        demon1: {
-          name: "Демон Азраїл",
-          avatar: "😈",
-          color: "#ff4757",
-          type: "demon"
-        },
-        spirit1: {
-          name: "Дух дитини",
-          avatar: "👶",
-          color: "#5f27cd",
-          type: "spirit"
-        },
-        entity1: {
-          name: "Темна сутність",
-          avatar: "🌑",
-          color: "#2d3436",
-          type: "entity"
-        }
-      };
-      
-      set(charactersRef, defaultChars);
-    }
-
-    // Завантаження персонажів
-    onValue(charactersRef, (snapshot) => {
-      characters = snapshot.val() || {};
-      if (Object.keys(characters).length === 0) {
-        initDefaultCharacters();
-        return;
-      }
-      renderCharacters();
-    });
-
-    // Завантаження повідомлень
-    onValue(messagesRef, (snapshot) => {
-      const messagesContainer = document.getElementById("messagesContainer");
-      messagesContainer.innerHTML = "";
-      
-      const data = snapshot.val();
-      if (data) {
-        const messages = Object.entries(data)
-          .map(([id, msg]) => ({ id, ...msg }))
-          .sort((a, b) => a.timestamp - b.timestamp);
-
-        messages.forEach(msg => {
-          const messageDiv = document.createElement("div");
-          messageDiv.className = `admin-message ${msg.sender === "user" ? "user" : "other"}`;
-          
-          const time = new Date(msg.timestamp).toLocaleTimeString('uk-UA', {
-            hour: '2-digit',
-            minute: '2-digit'
-          });
-
-          if (msg.sender === "user") {
-            messageDiv.innerHTML = `<strong>👤 Користувач:</strong> ${msg.text} <small>(${time})</small>`;
-          } else {
-            const char = msg.character || { name: 'Невідомий', avatar: '❓' };
-            messageDiv.innerHTML = `<strong>${char.avatar} ${char.name}:</strong> ${msg.text} <small>(${time})</small>`;
-          }
-
-          messagesContainer.appendChild(messageDiv);
-        });
-      }
-
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    });
-
-    // Завантаження налаштувань
-    onValue(settingsRef, (snapshot) => {
-      settings = snapshot.val() || {};
-      if (settings.chatTitle) {
-        document.getElementById("chatTitle").value = settings.chatTitle;
-      }
-      if (settings.background) {
-        const bgSelect = document.getElementById("backgroundSelect");
-        const bgKey = Object.keys(backgrounds).find(key => backgrounds[key] === settings.background);
-        if (bgKey) {
-          bgSelect.value = bgKey;
-          updateBackgroundPreview(bgKey);
-        }
-      }
-    });
-
-    // Відображення персонажів
-    function renderCharacters() {
-      const charactersList = document.getElementById("charactersList");
-      charactersList.innerHTML = "";
-
-      Object.entries(characters).forEach(([id, char]) => {
-        const div = document.createElement("div");
-        div.className = `character-item ${selectedCharacter === id ? 'active' : ''}`;
-        div.onclick = () => selectCharacter(id);
-        
-        div.innerHTML = `
-          <div class="character-avatar" style="background: ${char.color}">${char.avatar}</div>
-          <div class="character-info">
-            <div class="character-name">${char.name}</div>
-            <div class="character-type">${getTypeLabel(char.type)}</div>
-          </div>
-        `;
-        
-        charactersList.appendChild(div);
-      });
-    }
-
-    function getTypeLabel(type) {
-      const labels = {
-        ghost: 'Привид',
-        demon: 'Демон',
-        spirit: 'Дух',
-        entity: 'Сутність',
-        other: 'Інше'
-      };
-      return labels[type] || 'Невідомо';
-    }
-
-    // Вибір персонажа
-    function selectCharacter(id) {
-      selectedCharacter = id;
-      const char = characters[id];
-      
-      document.getElementById("charName").value = char.name;
-      document.getElementById("charAvatar").value = char.avatar;
-      document.getElementById("charColor").value = char.color;
-      document.getElementById("charType").value = char.type;
-      
-      renderCharacters();
-    }
-
-    // Додавання нового персонажа
-    window.addNewCharacter = function() {
-      const newId = 'char_' + Date.now();
-      const newChar = {
-        name: "Новий персонаж",
-        avatar: "👻",
-        color: "#ff6b6b",
-        type: "ghost"
-      };
-      
-      update(charactersRef, { [newId]: newChar });
-      selectedCharacter = newId;
-    };
-
-    // Збереження персонажа
-    window.saveCharacter = function() {
-      if (!selectedCharacter) {
-        alert("Оберіть персонажа для редагування");
-        return;
-      }
-
-      const name = document.getElementById("charName").value.trim();
-      const avatar = document.getElementById("charAvatar").value.trim();
-      const color = document.getElementById("charColor").value;
-      const type = document.getElementById("charType").value;
-
-      if (!name || !avatar) {
-        alert("Заповніть всі поля");
-        return;
-      }
-
-      const updatedChar = { name, avatar, color, type };
-      update(charactersRef, { [selectedCharacter]: updatedChar });
-      
-      alert("Персонажа збережено!");
-    };
-
-    // Видалення персонажа
-    window.deleteCharacter = function() {
-      if (!selectedCharacter) {
-        alert("Оберіть персонажа для видалення");
-        return;
-      }
-
-      if (confirm("Ви впевнені, що хочете видалити цього персонажа?")) {
-        remove(ref(db, `characters/${selectedCharacter}`));
-        selectedCharacter = null;
-        
-        // Очистити форму
-        document.getElementById("charName").value = "";
-        document.getElementById("charAvatar").value = "";
-        document.getElementById("charColor").value = "#ff6b6b";
-        document.getElementById("charType").value = "ghost";
-      }
-    };
-
-    // Надсилання повідомлення
-    window.sendMessage = function() {
-      if (!selectedCharacter) {
-        alert("Оберіть персонажа для надсилання повідомлення");
-        return;
-      }
-
-      const text = document.getElementById("adminMessage").value.trim();
-      if (!text) return;
-
-      const character = characters[selectedCharacter];
-      
-      push(messagesRef, {
-        sender: "admin",
-        text: text,
-        character: character,
-        timestamp: Date.now()
-      });
-
-      document.getElementById("adminMessage").value = "";
-      
-      // Вимкнути індикатор друкування
-      set(typingRef, { isTyping: false });
-    };
-
-    // Імітація друкування
-    window.simulateTyping = function() {
-      if (!selectedCharacter) {
-        alert("Оберіть персонажа");
-        return;
-      }
-
-      set(typingRef, {
-        isTyping: true,
-        sender: "admin",
-        character: characters[selectedCharacter]
-      });
-
-      // Автоматично вимкнути через 10 секунд
-      setTimeout(() => {
-        set(typingRef, { isTyping: false });
-      }, 10000);
-    };
-
-    // Швидкі відповіді
-    window.insertQuickResponse = function(text) {
-      document.getElementById("adminMessage").value = text;
-    };
-
-    // Очищення чату
-    window.clearChat = function() {
-      if (confirm("Ви впевнені, що хочете очистити всю історію чату?")) {
-        remove(messagesRef);
-      }
-    };
-
-    // Оновлення фону
-    window.updateBackground = function() {
-      const select = document.getElementById("backgroundSelect");
-      updateBackgroundPreview(select.value);
-    };
-
-    function updateBackgroundPreview(bgKey) {
-      const preview = document.getElementById("backgroundPreview");
-      preview.style.background = backgrounds[bgKey];
-    }
-
-    // Збереження налаштувань
-    window.saveSettings = function() {
-      const chatTitle = document.getElementById("chatTitle").value.trim();
-      const backgroundKey = document.getElementById("backgroundSelect").value;
-      const background = backgrounds[backgroundKey];
-
-      const newSettings = {};
-      if (chatTitle) newSettings.chatTitle = chatTitle;
-      if (background) newSettings.background = background;
-
-      set(settingsRef, newSettings);
-      alert("Налаштування збережено!");
-    };
-
-    // Ініціалізація
-    updateBackgroundPreview('gradient1');
-  </script>
+  <!-- Scripts -->
+  <script src="scripts/firebase-config.js"></script>
+  <script src="scripts/admin-core.js"></script>
+  <script src="scripts/admin-characters.js"></script>
+  <script src="scripts/admin-messages.js"></script>
+  <script src="scripts/admin-settings.js"></script>
+  <script src="scripts/admin-ui.js"></script>
 </body>
 </html>

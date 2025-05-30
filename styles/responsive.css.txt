@@ -1,0 +1,56 @@
+/* Responsive Design */
+@media (max-width: 768px) {
+  .message {
+    max-width: 85%;
+  }
+  
+  .header {
+    padding: 8px 12px;
+  }
+  
+  .messages-area {
+    padding: 8px 0;
+  }
+  
+  .input-area {
+    padding: 6px 12px 12px;
+  }
+  
+  .chat-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+  
+  .message-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .message {
+    max-width: 90%;
+  }
+  
+  .header {
+    padding: 6px 10px;
+  }
+  
+  .chat-info h2 {
+    font-size: 15px;
+  }
+  
+  .chat-info .status {
+    font-size: 12px;
+  }
+  
+  .input-container {
+    padding: 4px 6px 4px 10px;
+  }
+  
+  .message-input {
+    font-size: 14px;
+  }
+}

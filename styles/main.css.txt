@@ -1,0 +1,72 @@
+/* CSS Variables */
+:root {
+  --bg-color: #0f1419;
+  --header-bg: #17212b;
+  --message-bg: #182533;
+  --user-message-bg: #2b5278;
+  --text-color: #ffffff;
+  --secondary-text: #8aa8c8;
+  --border-color: #0e1621;
+  --input-bg: #182533;
+  --accent-color: #2b5278;
+  --online-color: #4fb3d9;
+  --shadow: rgba(0,0,0,0.4);
+  --reply-line: #2b5278;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-color);
+  color: var(--text-color);
+  overflow: hidden;
+  background-image: var(--bg-image, none);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes typing {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 80% { content: '...'; }
+  90%, 100% { content: ''; }
+}
